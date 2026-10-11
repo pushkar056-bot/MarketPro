@@ -1,0 +1,149 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}MarketPro{% endblock %}</title>
+    <style>
+        /* --- UNPIX Theme Colors --- */
+        /* Deep Blue: #0056b3 */
+        /* Bright Blue: #00a8ff */
+        /* Background: #f0f4f8 */
+        
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0; 
+            padding: 20px;
+            background-color: #f0f4f8; 
+            color: #333;
+        }
+        h1 { color: #0056b3; font-weight: 600; }
+        
+        /* Table Styles */
+        table { 
+            width: 100%; 
+            border-collapse: separate; 
+            border-spacing: 0;
+            margin-top: 20px; 
+            background-color: #ffffff; 
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05); 
+        }
+        th, td { padding: 15px; text-align: left; }
+        th { 
+            background-color: #0056b3; 
+            color: white; 
+            font-weight: 600;
+        }
+        td { border-bottom: 1px solid #e2e8f0; color: #4a5568; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover { background-color: #f8fafc; }
+        
+        .empty-message { text-align: center; color: #777; font-style: italic; padding: 20px; }
+        
+        /* Button Styles */
+        .btn-edit { color: #00a8ff; text-decoration: none; font-weight: 600; margin-right: 10px; }
+        .btn-edit:hover { color: #0056b3; }
+        .btn-delete { color: #dc3545; text-decoration: none; font-weight: 600; }
+        .btn-delete:hover { color: #a71d2a; }
+        .btn-add { color: #28a745; text-decoration: none; font-weight: bold; }
+        
+        /* Navigation Links */
+        .nav-links a { 
+            color: #0056b3; 
+            text-decoration: none; 
+            font-weight: 600; 
+            margin-right: 20px; 
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: #00a8ff; }
+        
+        /* Form Styles */
+        .form-container { 
+            background: #ffffff; 
+            padding: 25px; 
+            max-width: 500px; 
+            border-radius: 10px; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05); 
+            margin-top: 20px; 
+        }
+        .form-container p { margin-bottom: 15px; }
+        .form-container label { display: block; font-weight: 600; margin-bottom: 5px; color: #0056b3; }
+        .form-container input, .form-container select { 
+            width: 100%; 
+            padding: 10px; 
+            box-sizing: border-box; 
+            border: 1px solid #cbd5e1; 
+            border-radius: 6px; 
+            outline: none;
+        }
+        .form-container input:focus, .form-container select:focus {
+            border-color: #00a8ff;
+            box-shadow: 0 0 0 3px rgba(0, 168, 255, 0.2);
+        }
+        
+        /* Action Buttons */
+        .btn-submit { 
+            background-color: #00a8ff; 
+            color: white; 
+            padding: 12px 20px; 
+            border: none; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-size: 16px; 
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .btn-submit:hover { background-color: #008ecc; }
+        
+        .btn-danger { 
+            background-color: #dc3545; 
+            color: white; 
+            padding: 12px 20px; 
+            border: none; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-size: 16px; 
+            font-weight: bold;
+        }
+        .btn-danger:hover { background-color: #c82333; }
+    </style>
+</head>
+<body>
+
+    <!-- Logo Section -->
+    <div style="margin-bottom: 15px;">
+        <img src="{% static 'images/logo.png' %}" alt="MarketPro Logo" style="height: 60px;">
+    </div>
+
+    <!-- Welcome and Logout Section -->
+    {% if user.is_authenticated %}
+    <div style="text-align: right; margin-bottom: 20px;">
+        <span style="font-weight: 600; color: #0056b3;">Welcome, {{ user.username }}!</span>
+        
+        <!-- Logout must be a POST request in Django 5+ -->
+        <form action="{% url 'logout' %}" method="post" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" style="background: none; border: none; color: #dc3545; margin-left: 10px; font-weight: bold; cursor: pointer; font-size: 16px; font-family: inherit; transition: color 0.3s;">
+                Logout
+            </button>
+        </form>
+    </div>
+    {% endif %}
+
+    <!-- Global Navigation Links -->
+    <p class="nav-links" style="background: white; padding: 15px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+        <a href="{% url 'product_list' %}">Product List</a>
+        <a href="{% url 'product_create' %}">+ Add New Product</a>
+        <a href="{% url 'create_sale' %}">+ Create Sale</a>
+        <a href="{% url 'sale_list' %}">Sales History</a>
+    </p>
+
+    <!-- Main Content Block -->
+    {% block content %}
+    {% endblock %}
+
+</body>
+</html>

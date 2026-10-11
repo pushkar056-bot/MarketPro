@@ -1,0 +1,22 @@
+# 🛒 MarketPro - Mini POS System
+
+A simple and efficient Point of Sale (POS) system built with Django.
+
+## Features
+- Product CRUD (Create, Read, Update, Delete)
+- Category & Customer Management
+- Automatic Stock Management
+- Create Sale & Calculate Total
+- Sales History
+- Search & Filter Products
+- User Authentication (Login/Logout)
+
+## Tech Stack
+- Python
+- Django
+- SQLite (Database)
+- HTML/CSS
+
+
+Username: admin
+Password: admin123

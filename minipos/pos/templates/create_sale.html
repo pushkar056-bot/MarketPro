@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Sale - Mini POS{% endblock %}
+
+{% block content %}
+    <style>
+        .container { background: #fff; padding: 20px; max-width: 800px; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-top: 20px; }
+        fieldset { border: 1px solid #ddd; padding: 15px; margin-bottom: 20px; border-radius: 4px; }
+        legend { font-weight: bold; color: #007bff; padding: 0 5px; }
+        p { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; }
+        input, select { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
+        button { background-color: #28a745; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
+        button:hover { background-color: #218838; }
+    </style>
+
+    <div class="container">
+        <h1>Create New Sale</h1>
+        <form method="POST">
+            {% csrf_token %}
+            
+            <fieldset>
+                <legend>Customer Details</legend>
+                {{ sale_form.as_p }}
+            </fieldset>
+
+            <fieldset>
+                <legend>Products</legend>
+                {{ formset.management_form }}
+                {{ formset.non_form_errors }}
+                {% for form in formset %}
+                    <div style="border-bottom: 1px dashed #ccc; padding-bottom: 10px; margin-bottom: 10px;">
+                        {{ form.as_p }}
+                    </div>
+                {% endfor %}
+            </fieldset>
+
+            <button type="submit">Complete Sale</button>
+            <a href="{% url 'product_list' %}" style="margin-left: 10px; color: #007bff; text-decoration: none;">Cancel</a>
+        </form>
+    </div>
+{% endblock %}

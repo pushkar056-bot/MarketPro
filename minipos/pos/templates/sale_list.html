@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Sales History - MarketPro{% endblock %}
+
+{% block content %}
+    <h1>Sales History</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Sale ID</th>
+                <th>Customer</th>
+                <th>Products</th> 
+                <th>Date</th>
+                <th>Total Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sale in sales %}
+            <tr>
+                <td>#{{ sale.id }}</td>
+                <td>{{ sale.customer.name|default:"Walk-in Customer" }}</td>
+                <td>
+                    {% for item in sale.items.all %}
+                        {{ item.product.name }} ({{ item.quantity }}){% if not forloop.last %}, {% endif %}
+                    {% empty %}
+                        No items
+                    {% endfor %}
+                </td>
+                <td>{{ sale.date|date:"Y-m-d H:i" }}</td>
+                <td>Rs. {{ sale.total_amount }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="empty-message">No sales found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
